@@ -75,6 +75,7 @@ class App extends Component {
 
       switch (message.type) {
         case MessageType.TEXT_MESSAGE:
+        case MessageType.DATABASE:
           self.props.messageReceived(message);
           console.log(message);
           break;
