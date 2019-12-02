@@ -76,6 +76,7 @@ class App extends Component {
       switch (message.type) {
         case MessageType.TEXT_MESSAGE:
           self.props.messageReceived(message);
+          console.log(message);
           break;
         case MessageType.USER_JOINED:
           users = JSON.parse(message.data);
