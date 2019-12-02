@@ -4,5 +4,6 @@ export default  class MessageType {
     static USER_JOINED = 'USER_JOINED';
     static USER_LEFT = 'USER_LEFT';
     static USER_JOINED_ACK = 'USER_JOINED_ACK';
+    static WELCOME = 'WELCOME';
     static DATABASE = 'DATABASE'
 }

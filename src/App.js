@@ -75,6 +75,7 @@ class App extends Component {
 
       switch (message.type) {
         case MessageType.TEXT_MESSAGE:
+        case MessageType.WELCOME:
         case MessageType.DATABASE:
           self.props.messageReceived(message);
           console.log(message);
@@ -88,6 +89,7 @@ class App extends Component {
           self.props.userLeft(users);
           break;
         case MessageType.USER_JOINED_ACK:
+          console.log(message);
           let thisUser = message.user;
           self.props.userJoinedAck(thisUser);
           break;

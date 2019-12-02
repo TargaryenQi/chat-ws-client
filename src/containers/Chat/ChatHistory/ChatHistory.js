@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
+import MessageType from '../SendMessage/MessageType';
 
 class ChatHistory extends Component {
 
-    render() {
+    
+    render() {        
         const style = {
             backgroundColor: '#eaeaea',
             padding: 15,
@@ -34,6 +36,9 @@ class ChatHistory extends Component {
         };
 
         const isMe = this.props.thisUser.name === message.user.name;
+        const isWelcome = message.type === MessageType.WELCOME;
+        const notSimpleBot = message.user.name !== 'Simple Bot';
+
         const floatDirection = isMe ? 'right' : 'left'
         const nameColor = isMe ? 'green' : 'red';
         const margin = isMe ? ' 0 0 0 40px' : '0 40px 0 0 ';
@@ -69,7 +74,12 @@ class ChatHistory extends Component {
             }
         }
 
-        const resultCard = <span>
+        const resultCard = 
+        
+        <span>
+            {isWelcome || notSimpleBot ? <span>{message.data}</span>
+            : 
+            <span>
             <span>
                 Search Type: {bruteForceResult && bruteForceResult.searchType}
             </span>
@@ -111,7 +121,10 @@ class ChatHistory extends Component {
                     { luceneResult && (luceneResult.results? luceneResult.results : "No search results")}
                 </span> 
             </span>
+        </span>}
         </span>
+       
+        
 
         return (
             <div key={i} style={style}>
