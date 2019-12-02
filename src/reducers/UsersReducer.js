@@ -1,5 +1,5 @@
 
-export default function (state = [], action) {
+export default function (state = ["Server"], action) {
     switch (action.type) {
         case 'USER_JOINED':
         case 'USER_LEFT':

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Singleton from '../../../socket';
@@ -6,75 +6,63 @@ import MessageType from './MessageType';
 
 import { connect } from 'react-redux';
 
-class SendMessage extends Component {
+const styles = {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%'
+};
+const fieldStyle = {
+    width: '70%'
+};
+const btnStyles = {
+    marginLeft: 25
+};
 
-    constructor(props) {
-        super(props);
+const SendMessage = ({messages,thisUser}) => {
 
-        this.state = {
-            inputValue: ''
+
+    const [inputValue,setInputValue] = useState('');
+
+        const sendMessage = () => {
+            const socket = Singleton.getInstance();
+            let messageDto = JSON.stringify({ user: thisUser, data: inputValue, type: MessageType.TEXT_MESSAGE });
+            socket.send(messageDto);
+            setInputValue('');
         }
-    }
 
-    render() {
-
-        if(!this.props.thisUser) return '';
-
-        const styles = {
-            position: 'absolute',
-            bottom: 0,
-            width: '100%'
-        };
-        const fieldStyle = {
-            width: '70%'
-        };
-        const btnStyles = {
-            marginLeft: 25
-        };
+        const handleKeyPress = (event) => {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
 
         return (
-            <div style={styles}>
-                <TextField
-                    hintText="Write message here.."
-                    fullWidth={true}
-                    style={fieldStyle}
-                    value={this.state.inputValue}
-                    onChange={this.updateInputValue.bind(this)}
-                    onKeyPress={this.handleKeyPress}
-                    autoFocus
-                />
-                <RaisedButton style={btnStyles} onClick={this.sendMessage.bind(this)} > Send </RaisedButton>
-            </div>
+        <div>{thisUser&&<div style={styles}>
+                
+        <TextField
+            hintText="Write message here.."
+            fullWidth={true}
+            style={fieldStyle}
+            value={inputValue}
+            onChange={(e)=> setInputValue(e.target.value)}
+            onKeyPress={(e)=>handleKeyPress(e)}
+            autoFocus
+        />
+        <RaisedButton style={btnStyles} onClick={()=>sendMessage()} > Send </RaisedButton>
+    </div>}
+    </div>
+            
         );
-    }
-
-    handleKeyPress = (event) => {
-        if (event.key === 'Enter') {
-            this.sendMessage();
-        }
-    }
-
-    sendMessage() {
-        const socket = Singleton.getInstance();
-        let messageDto = JSON.stringify({ user: this.props.thisUser, data: this.state.inputValue, type: MessageType.TEXT_MESSAGE });
-        socket.send(messageDto);
-        this.setState({ inputValue: '' })
-    }
-
-    updateInputValue(evt) {
-        this.setState({
-            inputValue: evt.target.value
-        })
-    }
 }
+
 
 // Whatever is returned is going to show up as props inside UserList
-function mapStateToProps(state) {
-    return {
+const  mapStateToProps = state => ( {
+    
         messages: state.messages,
         thisUser: state.thisUser
-    }
-}
+})
 
 // Promote component to container
 export default connect(mapStateToProps)(SendMessage);
