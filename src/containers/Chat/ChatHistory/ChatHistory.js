@@ -5,7 +5,7 @@ import MessageType from '../SendMessage/MessageType';
 
 class ChatHistory extends Component {
 
-    
+
     render() {        
         const style = {
             backgroundColor: '#eaeaea',
@@ -15,7 +15,6 @@ class ChatHistory extends Component {
             display: 'flex',
             flexDirection: 'column'
         };
-
         
 
         const msgs = this.props.messages.map((message, i) =>
@@ -23,7 +22,7 @@ class ChatHistory extends Component {
         );
 
         return (
-            <div style={style}>
+            <div className="chat_history" style={style}>
                 {msgs}
             </div>
         )
@@ -65,9 +64,9 @@ class ChatHistory extends Component {
             : <span>
                 {searchResults.map((searchResult,index) => (
                     <span key={index}>
-                        <span>SearchType: {searchResult.searchType}</span>
+                        <span>Search Type: {searchResult.searchType}</span>
                         <br></br>
-                        <span>timeConsuming: {searchResult.timeConsuming}</span>
+                        <span>Time Consuming:  {searchResult.timeConsuming}</span>
                         <br></br>
                         <span>Result:{searchResult.result}</span>
                         <br></br>
