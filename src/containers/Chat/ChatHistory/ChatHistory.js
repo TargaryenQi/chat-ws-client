@@ -59,18 +59,21 @@ class ChatHistory extends Component {
 
         const {searchResults} = message;
 
-        const searchResultBlock = searchResults.map((searchResult,index) =>{
-            <span>
-                <span>{searchResult.searchType}</span>
-                <span>{searchResult.timeConsuming}</span>
-                <span>{searchResult.result}</span>
-            </span>
-        })
-
         const resultCard = 
         <span>
             {isWelcome || invalidInput ? <span>{message.data}</span>
-            : searchResultBlock
+            : <span>
+                {searchResults.map((searchResult,index) => (
+                    <span key={index}>
+                        <span>SearchType: {searchResult.searchType}</span>
+                        <br></br>
+                        <span>timeConsuming: {searchResult.timeConsuming}</span>
+                        <br></br>
+                        <span>Result:{searchResult.result}</span>
+                        <br></br>
+                    </span>
+                ))}
+            </span>
             }
         </span>
 
