@@ -37,7 +37,11 @@ class ChatHistory extends Component {
 
         const isMe = this.props.thisUser.name === message.user.name;
         const isWelcome = message.type === MessageType.WELCOME;
-        const notSimpleBot = message.user.name !== 'Simple Bot';
+        const isSimpleBot = message.user.name === 'Simple Bot';
+        const invalidInput = message.searchResults.length === 0;
+        console.log("isMe",isMe);
+        console.log("isWelcome",isWelcome);
+        console.log("invalidInput",invalidInput);
 
         const floatDirection = isMe ? 'right' : 'left'
         const nameColor = isMe ? 'green' : 'red';
@@ -75,11 +79,10 @@ class ChatHistory extends Component {
         }
 
         const resultCard = 
-        
         <span>
-            {isWelcome || notSimpleBot ? <span>{message.data}</span>
+            {isWelcome || invalidInput ? (<span>{message.data}</span>)
             : 
-            <span>
+            (<span>
             <span>
                 Search Type: {bruteForceResult && bruteForceResult.searchType}
             </span>
@@ -121,7 +124,8 @@ class ChatHistory extends Component {
                     { luceneResult && (luceneResult.results? luceneResult.results : "No search results")}
                 </span> 
             </span>
-        </span>}
+            </span>)
+            }
         </span>
        
         
