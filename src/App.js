@@ -76,7 +76,7 @@ class App extends Component {
       switch (message.type) {
         case MessageType.TEXT_MESSAGE:
         case MessageType.WELCOME:
-        case MessageType.DATABASE:
+        case MessageType.BOT_RESPONSE:
           self.props.messageReceived(message);
           console.log(message);
           break;

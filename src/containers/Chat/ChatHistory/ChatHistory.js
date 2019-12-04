@@ -36,12 +36,8 @@ class ChatHistory extends Component {
         };
 
         const isMe = this.props.thisUser.name === message.user.name;
-        const isWelcome = message.type === MessageType.WELCOME;
-        const isSimpleBot = message.user.name === 'Simple Bot';
+        const isWelcome = message.type === MessageType.USER_JOINED_ACK;
         const invalidInput = message.searchResults.length === 0;
-        console.log("isMe",isMe);
-        console.log("isWelcome",isWelcome);
-        console.log("invalidInput",invalidInput);
 
         const floatDirection = isMe ? 'right' : 'left'
         const nameColor = isMe ? 'green' : 'red';
@@ -63,72 +59,20 @@ class ChatHistory extends Component {
 
         const {searchResults} = message;
 
-        const bruteForceResult = searchResults ? searchResults[0] : null;
-
-        const luceneResult = searchResults ? searchResults[1] : null;
-
-        const handleToggle = e => {
-            const resultSpan = e.target.nextSibling;
-            if (resultSpan.style.display === "none") {
-                resultSpan.style.display = "block";
-                e.target.innerHTML = "Click to hide"
-              } else {
-                resultSpan.style.display = "none";
-                e.target.innerHTML ="Click to show"
-            }
-        }
+        const searchResultBlock = searchResults.map((searchResult,index) =>{
+            <span>
+                <span>{searchResult.searchType}</span>
+                <span>{searchResult.timeConsuming}</span>
+                <span>{searchResult.result}</span>
+            </span>
+        })
 
         const resultCard = 
         <span>
-            {isWelcome || invalidInput ? (<span>{message.data}</span>)
-            : 
-            (<span>
-            <span>
-                Search Type: {bruteForceResult && bruteForceResult.searchType}
-            </span>
-            <br />
-            <span>
-                Time Consuming: { bruteForceResult && bruteForceResult.timeConsuming} MS
-            </span>
-            <br />
-            <span>
-                Result Number: { bruteForceResult && bruteForceResult.resultNumber}
-            </span>
-            <br />
-            <span>
-                Results:
-                {(bruteForceResult && bruteForceResult.resultNumber) && <button onClick={e => handleToggle(e)}>Click To hide</button>}
-                <span>
-                    { bruteForceResult && (bruteForceResult.results? bruteForceResult.results : "No search results")}
-                </span> 
-            </span>
-
-            <br />
-             {/* Lucene search result. */}
-            <span>
-                Search Type: {luceneResult && luceneResult.searchType}
-            </span>
-            <br />
-            <span>
-                Time Consuming: { luceneResult && luceneResult.timeConsuming} MS
-            </span>
-            <br />
-            <span>
-                Result Number: { luceneResult && luceneResult.resultNumber}
-            </span>
-            <br />
-            <span>
-                Results:
-                {(luceneResult && luceneResult.resultNumber) && <button onClick={e => handleToggle(e)} >Click To hide</button>}
-                <span style={{display:"block"}}>
-                    { luceneResult && (luceneResult.results? luceneResult.results : "No search results")}
-                </span> 
-            </span>
-            </span>)
+            {isWelcome || invalidInput ? <span>{message.data}</span>
+            : searchResultBlock
             }
         </span>
-       
-        
 
         return (
             <div key={i} style={style}>

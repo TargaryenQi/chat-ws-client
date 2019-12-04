@@ -5,5 +5,5 @@ export default  class MessageType {
     static USER_LEFT = 'USER_LEFT';
     static USER_JOINED_ACK = 'USER_JOINED_ACK';
     static WELCOME = 'WELCOME';
-    static DATABASE = 'DATABASE'
+    static BOT_RESPONSE = 'BOT_RESPONSE'
 }
