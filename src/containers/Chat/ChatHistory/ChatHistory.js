@@ -10,7 +10,7 @@ class ChatHistory extends Component {
             backgroundColor: '#eaeaea',
             padding: 15,
             height: '420px',
-            overflowY: 'scroll',
+            overflowY: 'auto',
             display: 'flex',
             flexDirection: 'column'
         };
@@ -20,14 +20,14 @@ class ChatHistory extends Component {
             this.renderMessages(message, i)
         );
 
-        window.setInterval(function() {
-            var elem = document.getElementById('chat_history');
+        const scrollToBottom = function(e) {
+            const elem = document.getElementById('chat_history');
             elem.scrollTop = elem.scrollHeight;
-          }, 500);
-  
+        };
+        
                 
         return (
-            <div id="chat_history" style={style} autofocus>
+            <div id="chat_history" style={style} onChange={e => scrollToBottom(e)}>
                 {msgs}
             </div>
         )
