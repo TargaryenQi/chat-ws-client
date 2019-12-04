@@ -5,7 +5,6 @@ import MessageType from '../SendMessage/MessageType';
 
 class ChatHistory extends Component {
 
-
     render() {        
         const style = {
             backgroundColor: '#eaeaea',
@@ -21,8 +20,14 @@ class ChatHistory extends Component {
             this.renderMessages(message, i)
         );
 
+        window.setInterval(function() {
+            var elem = document.getElementById('chat_history');
+            elem.scrollTop = elem.scrollHeight;
+          }, 500);
+  
+                
         return (
-            <div className="chat_history" style={style}>
+            <div id="chat_history" style={style} autofocus>
                 {msgs}
             </div>
         )
@@ -76,6 +81,7 @@ class ChatHistory extends Component {
             }
         </span>
 
+        
         return (
             <div key={i} style={style}>
                 <span style={textStyle}>
